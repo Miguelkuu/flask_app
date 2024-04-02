@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Posts{% endblock %}</h1>
+  {% if g.user %}
+    <a class="action" href="{{ url_for('blog.create') }}">New</a>
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+  {% for post in posts %}
+    {% if post['color'] == 'red' %}
+      <article class="post">
+        <div class="bg_red">
+          <header>
+            <div>
+              <h1>{{ post['title'] }}</h1>
+              <div class="about">by {{ post['username'] }} on {{ post['created'].strftime('%Y-%m-%d') }}</div>
+            </div>
+          </header>
+          <p class="body">{{ post['body'] }}</p>
+          {% if g.user['id'] == post['author_id'] %}
+            <a class="action" href="{{ url_for('blog.update', id=post['id']) }}">Edit</a>
+          {% endif %}
+        </div>
+      </article>
+      {% if not loop.last %}
+        <hr>
+      {% endif %}
+
+    {% elif post['color'] == 'orange' %}
+      <article class="post">
+        <div class="bg_orange">
+          <header>
+            <div>
+              <h1>{{ post['title'] }}</h1>
+              <div class="about">by {{ post['username'] }} on {{ post['created'].strftime('%Y-%m-%d') }}</div>
+            </div>
+          </header>
+          <p class="body">{{ post['body'] }}</p>
+          {% if g.user['id'] == post['author_id'] %}
+            <a class="action" href="{{ url_for('blog.update', id=post['id']) }}">Edit</a>
+          {% endif %}
+        </div>
+      </article>
+      {% if not loop.last %}
+        <hr>
+      {% endif %}
+
+    {% else %}
+      <article class="post">
+        <div class="bg_white">
+          <header>
+            <div>
+              <h1>{{ post['title'] }}</h1>
+              <div class="about">by {{ post['username'] }} on {{ post['created'].strftime('%Y-%m-%d') }}</div>
+            </div>
+          </header>
+          <p class="body">{{ post['body'] }}</p>
+          {% if g.user['id'] == post['author_id'] %}
+            <a class="action" href="{{ url_for('blog.update', id=post['id']) }}">Edit</a>
+          {% endif %}
+        </div>
+      </article>
+      {% if not loop.last %}
+        <hr>
+      {% endif %}
+    {% endif %}
+  {% endfor %}
+{% endblock %}
